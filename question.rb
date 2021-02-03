@@ -1,8 +1,13 @@
+require "./player"
+
 class Question
   # add question  What does # plus # equal?
   # can add a player into string with template literals
-  def initialize()
+  def initialize(points)
     @sumOfNumbers = 0
+    @points = points
+    @player1 = Player.new("Player 1", points)
+    @player2 = Player.new("Player 2", points)
   end
 
   def print_question(player)
@@ -26,15 +31,15 @@ class Question
     end
   end
 
-  def run(player1, player2)
+  def run()
     turn = 1
     isOver = false
 
     while not isOver do
       if turn.odd? #true
-        current_player = player1
+        current_player = @player1
       else
-        current_player = player2
+        current_player = @player2
       end
 
       puts "----- NEW TURN -----"
@@ -43,7 +48,7 @@ class Question
       check_answer(answer, current_player)
 
       # prints updates player points
-      puts "P1: #{player1.points}/3 vs P2: #{player2.points}/3"
+      puts "P1: #{@player1.points}/3 vs P2: #{@player2.points}/3"
 
       if current_player.points == 0
         isOver = true
@@ -53,10 +58,10 @@ class Question
 
     end
     # Determine winner
-    if player1 == current_player
-      winner = player2
+    if @player1 == current_player
+      winner = @player2
     else
-      winner = player1
+      winner = @player1
     end
     puts "#{winner.name} wins with a score of #{winner.points}/3"
     puts "----- GAME OVER -----"
